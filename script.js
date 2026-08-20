@@ -8,9 +8,13 @@ const modifySides = (sides) => {
         square.classList.add('square');
         square.style.height = `${800/sides}px`;
         square.style.width = `${800/sides}px`;
+        square.dataset.opacity = 0;
         container.appendChild(square);
         square.addEventListener('mouseenter', (e) => {
-        square.style.backgroundColor = generateColor();
+            let opacity = Number(square.dataset.opacity);
+            opacity = Math.min(opacity + 0.1, 1);
+            square.dataset.opacity = opacity;
+            square.style.backgroundColor = generateColor(opacity);
         });
     }
 }
@@ -19,11 +23,11 @@ const randomNumberGen = () => {
     return Math.floor(Math.random() * 256);
 }
 
-const generateColor = () => {
+const generateColor = (opacity) => {
     let red = randomNumberGen();
     let green = randomNumberGen();
     let blue = randomNumberGen();
-    let rgb = `rgb(${red}, ${green}, ${blue})`;
+    let rgb = `rgba(${red}, ${green}, ${blue}, ${opacity})`;
     return rgb;
 }
 
